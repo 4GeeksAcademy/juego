@@ -2,16 +2,29 @@
 <html>
   <head>
     <title>Javier, adivina el numero</title>
+    <style>
+      #resultBox {
+        margin-top: 20px;
+        border: 1px solid #000;
+        padding: 10px;
+        display: none;
+      }
+      .correct {
+        background-color: lightcoral;
+      }
+      .default {
+        background-color: #f0f8ff;
+      }
+    </style>
   </head>
   <body>
     <h1 style="color: cadetblue">Juego para que Javier adivine el numero</h1>
     <p style="font-family: monospace;">Adivina el numero entre el 1 y el 10.</p>
-    <input type="text" id="guessInput" />
+    <input type="text" id="guessInput" placeholder="Ingresa tu número" />
     <button onclick="guessNumberGame()" style="background-color: cadetblue;">
       Suerte
     </button>
-    <p id="result"></p>
-
+    <div id="resultBox" class="default"></div>
     <script src="app.js"></script>
   </body>
 </html>

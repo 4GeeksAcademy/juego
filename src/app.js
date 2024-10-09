@@ -3,10 +3,17 @@ document.addEventListener("DOMContentLoaded", function() {
   let attempts = 0;
 
   window.guessNumberGame = function() {
-    const userGuess = document.getElementById("guessInput").value;
+    const userGuessInput = document.getElementById("guessInput");
+    const userGuess = userGuessInput.value;
+    const resultBox = document.getElementById("resultBox");
 
-    if (isNaN(userGuess)) {
-      alert("Ingresa un numero valido.");
+    resultBox.style.display = "none";
+    resultBox.className = "default";
+
+    if (isNaN(userGuess) || userGuess.trim() === "") {
+      resultBox.textContent = "Ingresa un número válido.";
+      resultBox.style.display = "block";
+      userGuessInput.style.borderColor = "";
       return;
     }
 
@@ -14,17 +21,35 @@ document.addEventListener("DOMContentLoaded", function() {
     attempts++;
 
     if (guess === randomNumber) {
-      alert(
-        `Felicitaciones Javier! Adivinaste el numero correcto en ${attempts} intentos.`
-      );
-
-      randomNumber = Math.floor(Math.random() * 10) + 1;
-      attempts = 0;
-      document.getElementById("guessInput").value = "";
-    } else if (guess > randomNumber) {
-      alert("Tu numero es muy alto Javier, intenta uno mas bajo.");
+      resultBox.textContent = `¡Felicitaciones Javier! Adivinaste el número correcto en ${attempts} intentos.`;
+      resultBox.className = "default";
+      resultBox.style.display = "block";
+      resetGame();
     } else {
-      alert("Tu numero es muy bajo Javier, intenta uno mas alto.");
+      userGuessInput.style.borderColor = "red";
+
+      if (guess > randomNumber) {
+        resultBox.textContent =
+          "Tu número es muy alto Javier, intenta uno más bajo.";
+      } else {
+        resultBox.textContent =
+          "Tu número es muy bajo Javier, intenta uno más alto.";
+      }
+      resultBox.style.display = "block";
+
+      if (attempts >= 3) {
+        resultBox.textContent = `¡Perdiste! El número correcto era ${randomNumber}.`;
+        resultBox.className = "correct";
+        resultBox.style.display = "block";
+        resetGame();
+      }
     }
   };
+
+  function resetGame() {
+    randomNumber = Math.floor(Math.random() * 10) + 1;
+    attempts = 0;
+    document.getElementById("guessInput").value = "";
+    document.getElementById("guessInput").style.borderColor = "";
+  }
 });
